@@ -1,0 +1,9 @@
+# Ignore everything in the plugins directory
+/*
+
+# But do not ignore these specific folders
+!/tfp-dashboard/
+!/tfp-authentication/
+
+# Do not ignore this .gitignore file itself
+!.gitignore

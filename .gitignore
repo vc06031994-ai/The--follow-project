@@ -1,0 +1,19 @@
+# wp-config.php (Security: Do not push database passwords)
+wp-config.php
+
+# Ignore uploads (Images and media files take up too much space and shouldn't be in Git)
+wp-content/uploads/
+
+# Ignore backups
+wp-content/backups/
+wp-content/updraft/
+wp-content/cache/
+wp-content/ai1wm-backups/
+
+# Ignore log files
+*.log
+debug.log
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
