@@ -59,7 +59,6 @@ add_shortcode('tfp_program_syllabus', function($atts) {
         
         foreach ($lessons as $lesson) {
             // Does a new section start AT this lesson?
-            // learndash_30_get_course_sections returns array indexed by the first step (lesson) ID of the section
             if (isset($course_sections[$lesson->ID])) {
                 $section_obj = $course_sections[$lesson->ID];
                 $current_section = isset($section_obj->post_title) ? $section_obj->post_title : $current_section;
@@ -86,6 +85,7 @@ add_shortcode('tfp_program_syllabus', function($atts) {
         foreach ($grouped_content as $section_title => $section_lessons) :
             if (empty($section_lessons)) continue;
             $i++;
+            // Only the first one is active by default
             $active_class = ($i === 1) ? ' is-active' : '';
             ?>
             <div class="tfp-syllabus-item<?php echo $active_class; ?>">
@@ -110,102 +110,5 @@ add_shortcode('tfp_program_syllabus', function($atts) {
         <?php endforeach; ?>
     </div>
     <?php
-    echo tfp_syllabus_styles_and_scripts();
     return ob_get_clean();
 });
-
-function tfp_syllabus_styles_and_scripts() {
-    ob_start();
-    ?>
-    <style>
-        .tfp-syllabus-title{
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 130%;
-            font-family: "Eudoxus Sans", Sans-serif;
-        }
-        .tfp-syllabus-accordion {
-            width: 100%;
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
-        .tfp-syllabus-item {
-            background: #DEE2E2; /* Light grey background from Figma */
-            margin-bottom: 10px; /* Gap between items */
-            overflow: hidden;
-        }
-        .tfp-syllabus-header {
-            width: 100%;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            text-align: left;
-            font-weight: 700;
-            font-size: 15px;
-            color: #151411;
-            transition: all 0.2s;
-            text-transform: capitalize; /* Figma uses Title Case */
-        }
-        .tfp-syllabus-header:hover {
-            background: rgba(0, 0, 0, 0.03);
-        }
-        .tfp-syllabus-item.is-active .tfp-syllabus-header {
-            background: transparent;
-        }
-        .tfp-syllabus-icon {
-            transition: transform 0.3s;
-            color: #00666E; /* Dark arrow */
-            display: flex;
-            align-items: center;
-            transform: rotate(-90deg); /* Default to right chevron */
-        }
-        .tfp-syllabus-item.is-active .tfp-syllabus-icon {
-            transform: rotate(0deg); /* Point down when active */
-        }
-        .tfp-syllabus-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: transparent;
-        }
-        .tfp-syllabus-item.is-active .tfp-syllabus-body {
-            max-height: 2000px;
-            transition: max-height 0.5s ease-in;
-        }
-        .tfp-syllabus-content {
-            padding: 0 20px 20px 20px; /* No top padding to keep it close to header */
-        }
-        .tfp-syllabus-lessons-list {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .tfp-syllabus-lessons-list li {
-            position: relative;
-            padding-left: 0;
-            margin-bottom: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            color: #3C3C43D9;
-            line-height: 130%;
-            font-weight: 400; /* Normal weight for lessons */
-        }
-        .tfp-syllabus-lessons-list li:last-child {
-            margin-bottom: 0;
-        }
-    </style>
-    <script>
-        document.querySelectorAll('.tfp-syllabus-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const item = header.parentElement;
-                item.classList.toggle('is-active');
-            });
-        });
-    </script>
-    <?php
-    return ob_get_clean();
-}
