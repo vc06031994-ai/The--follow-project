@@ -152,3 +152,96 @@ function tfp_financial_aid_process_rejection($post_id) {
 
     wp_mail($user->user_email, $subject, $body);
 }
+
+// -----------------------------------------------------------------------------
+// CSV Export Functionality
+// -----------------------------------------------------------------------------
+
+// 1. Add "Export CSV" button to the CPT list table
+add_action('restrict_manage_posts', function ($post_type) {
+    if ($post_type === 'tfp_financial_aid') {
+        echo '<input type="submit" name="tfp_export_financial_aid_csv" id="tfp_export_financial_aid_csv" class="button button-primary" value="' . esc_attr__('Export to CSV', 'tfp-dashboard') . '">';
+    }
+});
+
+// 2. Handle the CSV Generation
+add_action('admin_init', function () {
+    if (isset($_GET['tfp_export_financial_aid_csv']) && isset($_GET['post_type']) && $_GET['post_type'] === 'tfp_financial_aid') {
+        
+        // Ensure user has permission
+        if (!current_user_can('edit_posts')) {
+            wp_die(__('You do not have sufficient permissions to access this page.'));
+        }
+
+        // Get all fields map to build headers
+        $fields = tfp_financial_aid_field_map();
+        
+        // Define CSV Headers
+        $headers = ['Date Submitted', 'Status', 'Applicant Name', 'Email'];
+        foreach ($fields as $key => $config) {
+            $headers[] = $config['label'];
+        }
+        $headers[] = 'Discount %';
+        $headers[] = 'Generated Coupon';
+
+        // Set Headers for CSV Download
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=financial-aid-applications-' . date('Y-m-d') . '.csv');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        $output = fopen('php://output', 'w');
+        
+        // Add BOM to fix UTF-8 in Excel
+        fputs($output, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
+        
+        fputcsv($output, $headers);
+
+        // Fetch all financial aid posts
+        $args = [
+            'post_type'      => 'tfp_financial_aid',
+            'posts_per_page' => -1,
+            'post_status'    => 'any',
+        ];
+        $applications = get_posts($args);
+
+        foreach ($applications as $app) {
+            $student_id = get_post_meta($app->ID, '_tfp_student_id', true);
+            $user = get_userdata($student_id);
+            
+            $status = get_post_meta($app->ID, '_tfp_status', true) ?: 'pending';
+            $discount = get_post_meta($app->ID, '_tfp_discount_percentage', true);
+            $coupon = get_post_meta($app->ID, '_tfp_generated_coupon', true);
+
+            $row = [
+                get_the_date('Y-m-d H:i:s', $app->ID),
+                ucfirst($status),
+                $user ? $user->display_name : 'Unknown',
+                $user ? $user->user_email : 'Unknown',
+            ];
+
+            // Append mapped fields data
+            foreach ($fields as $key => $config) {
+                $value = get_post_meta($app->ID, '_tfp_' . $key, true);
+                
+                // Program ID ko Program Name me convert karein
+                if ($key === 'program_id' && !empty($value)) {
+                    $program_title = get_the_title($value);
+                    if ($program_title) {
+                        $value = $program_title;
+                    }
+                }
+                
+                $row[] = $value !== '' ? $value : '';
+            }
+            
+            $row[] = $discount ? $discount . '%' : '';
+            $row[] = $coupon ?: '';
+
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit;
+    }
+});
