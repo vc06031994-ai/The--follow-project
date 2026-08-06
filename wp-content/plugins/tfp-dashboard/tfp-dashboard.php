@@ -61,6 +61,7 @@ require_once TFP_DASH_PATH . 'includes/page-profile.php';
 require_once TFP_DASH_PATH . 'includes/page-update-profile.php';
 require_once TFP_DASH_PATH . 'includes/learndash/helpers.php';
 require_once TFP_DASH_PATH . 'includes/learndash/admin-meta-box.php';
+require_once TFP_DASH_PATH . 'includes/learndash/syllabus-shortcode.php';
 require_once TFP_DASH_PATH . 'includes/week/cpt-readings.php';
 require_once TFP_DASH_PATH . 'includes/week/ajax.php';
 require_once TFP_DASH_PATH . 'includes/week/homework-helpers.php';
