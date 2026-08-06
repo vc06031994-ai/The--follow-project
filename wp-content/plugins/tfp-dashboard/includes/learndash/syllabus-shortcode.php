@@ -7,6 +7,10 @@ if (!defined('ABSPATH')) exit;
  */
 add_shortcode('tfp_program_syllabus', function($atts) {
     $product_id = get_the_ID();
+    
+    // Debugging check (Only for admins if needed)
+    $is_admin = current_user_can('manage_options');
+
     if (!$product_id || get_post_type($product_id) !== 'product') {
         if (isset($_GET['test_product_id'])) {
             $product_id = (int)$_GET['test_product_id'];
@@ -15,8 +19,10 @@ add_shortcode('tfp_program_syllabus', function($atts) {
         }
     }
 
-    $related_courses = get_post_meta($product_id, '_related_course', true);
+    // 1. Get the Course ID linked to this Product
     $course_id = 0;
+    $related_courses = get_post_meta($product_id, '_related_course', true);
+    
     if (is_array($related_courses)) {
         $course_id = (int) reset($related_courses);
     } elseif (!empty($related_courses)) {
@@ -24,43 +30,53 @@ add_shortcode('tfp_program_syllabus', function($atts) {
     }
 
     if (!$course_id) {
-        return '<p>' . esc_html__('No course syllabus available.', 'tfp-dashboard') . '</p>';
+        return $is_admin ? '<p>Debug: No LearnDash Course linked to this Product ID ' . $product_id . '</p>' : '';
     }
 
-    // Get Course Steps from LearnDash Meta
-    $steps_data = get_post_meta($course_id, 'ld_course_steps', true);
+    // 2. Fetch Lessons using standard LearnDash function
+    $lessons = learndash_get_lesson_list($course_id, ['num' => -1]);
     
-    // Fallback if no sections or steps found
-    if (empty($steps_data['steps']['sfwd-lessons'])) {
+    if (empty($lessons)) {
         return '<p>' . esc_html__('Course content coming soon.', 'tfp-dashboard') . '</p>';
     }
 
-    $lesson_ids = array_keys($steps_data['steps']['sfwd-lessons']);
-    $sections = !empty($steps_data['sections']) ? $steps_data['sections'] : [];
-
-    // Grouping Logic: Interleave Sections and Lessons
-    $grouped_content = [];
-    $current_section_name = __('General', 'tfp-dashboard');
-    
-    // If a section is at the very top (after_id = 0)
-    foreach ($sections as $s) {
-        if ($s['after_id'] == 0) {
-            $current_section_name = $s['name'];
-            break;
-        }
+    // 3. Try to get Sections (LearnDash 3.0+)
+    $sections = [];
+    $steps_data = get_post_meta($course_id, 'ld_course_steps', true);
+    if (!empty($steps_data['sections'])) {
+        $sections = $steps_data['sections'];
     }
-    
-    $grouped_content[$current_section_name] = [];
 
-    foreach ($lesson_ids as $lesson_id) {
-        $grouped_content[$current_section_name][] = get_the_title($lesson_id);
+    // 4. Group Lessons by Sections
+    $grouped_content = [];
+    
+    if (empty($sections)) {
+        // Fallback: Group everything under a default heading if no sections exist
+        $grouped_content[__('Course Syllabus', 'tfp-dashboard')] = $lessons;
+    } else {
+        // Grouping logic based on after_id
+        $current_section = __('Introduction', 'tfp-dashboard');
         
-        // Check if a new section starts AFTER this lesson
+        // Initial section check (if one starts at the very beginning)
         foreach ($sections as $s) {
-            if ($s['after_id'] == $lesson_id) {
-                $current_section_name = $s['name'];
-                if (!isset($grouped_content[$current_section_name])) {
-                    $grouped_content[$current_section_name] = [];
+            if ($s['after_id'] == 0) {
+                $current_section = $s['name'];
+                break;
+            }
+        }
+        
+        $grouped_content[$current_section] = [];
+        
+        foreach ($lessons as $lesson) {
+            $grouped_content[$current_section][] = $lesson;
+            
+            // Does a new section start after this lesson?
+            foreach ($sections as $s) {
+                if ($s['after_id'] == $lesson->ID) {
+                    $current_section = $s['name'];
+                    if (!isset($grouped_content[$current_section])) {
+                        $grouped_content[$current_section] = [];
+                    }
                 }
             }
         }
@@ -71,8 +87,8 @@ add_shortcode('tfp_program_syllabus', function($atts) {
     <div class="tfp-syllabus-accordion">
         <?php
         $i = 0;
-        foreach ($grouped_content as $section_title => $lessons) :
-            if (empty($lessons)) continue;
+        foreach ($grouped_content as $section_title => $section_lessons) :
+            if (empty($section_lessons)) continue;
             $i++;
             $active_class = ($i === 1) ? ' is-active' : '';
             ?>
@@ -88,8 +104,8 @@ add_shortcode('tfp_program_syllabus', function($atts) {
                 <div class="tfp-syllabus-body">
                     <div class="tfp-syllabus-content">
                         <ul class="tfp-syllabus-lessons-list">
-                            <?php foreach ($lessons as $lesson_title) : ?>
-                                <li><?php echo esc_html($lesson_title); ?></li>
+                            <?php foreach ($section_lessons as $lesson) : ?>
+                                <li><?php echo esc_html($lesson->post_title); ?></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
@@ -110,8 +126,8 @@ function tfp_syllabus_styles_and_scripts() {
             border: 1px solid #E5E7EB;
             border-radius: 8px;
             overflow: hidden;
+            margin-top: 20px;
             margin-bottom: 30px;
-            font-family: inherit;
         }
         .tfp-syllabus-item {
             border-bottom: 1px solid #E5E7EB;
@@ -130,11 +146,10 @@ function tfp_syllabus_styles_and_scripts() {
             cursor: pointer;
             text-align: left;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 16px;
             color: #111827;
             transition: all 0.2s;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         .tfp-syllabus-header:hover {
             background: #F3F4F6;
@@ -145,7 +160,7 @@ function tfp_syllabus_styles_and_scripts() {
         }
         .tfp-syllabus-icon {
             transition: transform 0.3s;
-            color: #D4AF37; /* Gold color */
+            color: #D4AF37;
         }
         .tfp-syllabus-item.is-active .tfp-syllabus-icon {
             transform: rotate(180deg);
@@ -161,7 +176,7 @@ function tfp_syllabus_styles_and_scripts() {
             transition: max-height 0.5s ease-in;
         }
         .tfp-syllabus-content {
-            padding: 24px 32px;
+            padding: 20px 24px;
         }
         .tfp-syllabus-lessons-list {
             margin: 0;
@@ -170,37 +185,27 @@ function tfp_syllabus_styles_and_scripts() {
         }
         .tfp-syllabus-lessons-list li {
             position: relative;
-            padding-left: 24px;
-            margin-bottom: 14px;
-            font-size: 16px;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 15px;
             color: #4B5563;
-            line-height: 1.5;
-            font-weight: 500;
         }
         .tfp-syllabus-lessons-list li::before {
             content: "";
             position: absolute;
             left: 0;
-            top: 8px;
-            width: 7px;
-            height: 7px;
-            background: #D4AF37; /* Gold dot */
+            top: 9px;
+            width: 6px;
+            height: 6px;
+            background: #D4AF37;
             border-radius: 50%;
-        }
-        .tfp-syllabus-lessons-list li:last-child {
-            margin-bottom: 0;
         }
     </style>
     <script>
         document.querySelectorAll('.tfp-syllabus-header').forEach(header => {
             header.addEventListener('click', () => {
                 const item = header.parentElement;
-                const isActive = item.classList.contains('is-active');
-                if (isActive) {
-                    item.classList.remove('is-active');
-                } else {
-                    item.classList.add('is-active');
-                }
+                item.classList.toggle('is-active');
             });
         });
     </script>
