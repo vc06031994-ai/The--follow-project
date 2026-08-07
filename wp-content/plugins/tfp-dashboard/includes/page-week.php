@@ -401,8 +401,6 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                             </div>
                         <?php endif; ?>
                     </div>
-                    
-                    </div>
                 </div>
                 <?php endforeach; ?>
             </div>
