@@ -501,7 +501,7 @@
 }
 
 .tfp-week__homework-sidebar {
-    flex: 0 0 450px;
+    flex: 0 0 500px;
     border-right: 2px solid var(--tfp-dash-border);
     padding-right: 20px;
     position: sticky;
@@ -575,16 +575,21 @@
     line-height: 130%;
     margin-bottom: 4px;
     color: var(--tfp-dash-text);
-    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tfp-week__homework-list-item-status {
     font-size: 12px;
-    color: var(--tfp-dash-muted);
+    font-family: var(--tfp-dash-font-alt);
+    font-weight: 500;
+    line-height: 180%;
+    color: var(--tfp-dash-text);
 }
 
-.tfp-week__homework-list-item-status span {
-    font-weight: 700;
+.tfp-week__homework-list-item.is-completed .tfp-week__homework-list-item-status span {
+    color: var(--tfp-dash-text);
 }
 
 
@@ -743,20 +748,15 @@
 }
 
 .tfp-week__homework-global-footer {
-    position: sticky;
-    bottom: 0;
     background: var(--tfp-dash-bg, #ffffff);
     padding: 20px 0;
     border-top: 1px solid var(--tfp-dash-border);
-    z-index: 100;
-    margin-top: 40px;
     display: flex;
     gap: 90px;
     align-items: center;
 }
 
 .tfp-week__homework-footer-left {
-    flex: 0 0 450px;
     padding-right: 20px;
 }
 
