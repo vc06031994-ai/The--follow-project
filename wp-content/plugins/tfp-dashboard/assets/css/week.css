@@ -741,12 +741,30 @@
     }
 }
 
-.tfp-week__homework-sticky-footer {
+.tfp-week__homework-global-footer {
     position: sticky;
-    bottom: 40px;
-    background: var(--tfp-dash-bg, #fcfbf9);
-    padding-top: 15px;
-    padding-bottom: 0px;
-    margin-top: auto;
-    z-index: 10;
+    bottom: 0;
+    background: var(--tfp-dash-bg, #ffffff);
+    padding: 20px 0;
+    border-top: 1px solid var(--tfp-dash-border);
+    z-index: 100;
+    margin-top: 40px;
+    display: flex;
+    gap: 90px;
+    align-items: center;
+}
+
+.tfp-week__homework-footer-left {
+    flex: 0 0 450px;
+    padding-right: 20px;
+}
+
+.tfp-week__homework-footer-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tfp-week__footer-state {
+    align-items: center;
 }
