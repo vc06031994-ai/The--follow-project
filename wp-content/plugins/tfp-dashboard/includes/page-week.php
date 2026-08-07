@@ -150,12 +150,8 @@ function tfp_dashboard_render_week_video_tab($week, $progress)
         <?php endif; ?>
     </div>
 
-    <div class="tfp-week__video-status" data-tfp-video-status>
-        <?php if ($is_complete) : ?>
-            <span class="tfp-dash-badge tfp-dash-badge--success"><?php esc_html_e('Watched — Reading unlocked', 'tfp-dashboard'); ?></span>
-        <?php else : ?>
-            <span class="tfp-dash-badge"><?php esc_html_e('Watch to the end to unlock Reading', 'tfp-dashboard'); ?></span>
-        <?php endif; ?>
+    <div class="tfp-week__video-footer" style="margin-top: 24px;">
+        <a href="?lesson_id=<?php echo esc_attr($week->ID); ?>&tab=reading" class="tfp-dash-btn tfp-dash-btn--primary tfp-week__video-next-btn" <?php echo !$is_complete ? 'style="opacity:0.45; pointer-events:none;" disabled' : ''; ?>><?php esc_html_e('Continue to Reading', 'tfp-dashboard'); ?></a>
     </div>
     <?php
 }
