@@ -49,6 +49,7 @@
     border: 1px solid transparent;
     font-family: var(--tfp-dash-font) !important;
     line-height: 130%;
+    border-radius: 8px !important;
 
 }
 
@@ -359,12 +360,12 @@
     font-size: 14px !important;
     white-space: nowrap;
     flex: 0 0 auto;
-    border-radius: 0 !important;
+
 }
 
 .tfp-reading-start-first {
     font-size: 14px !important;
-    border-radius: 0 !important;
+    border-radius: 8px !important;
 }
 
 .tfp-reading-prev {
@@ -398,9 +399,6 @@
 
 }
 
-.tfp-reading-back-video {
-    border-radius: 0 !important;
-}
 
 .tfp-reading-content-area {
     flex: 1;
