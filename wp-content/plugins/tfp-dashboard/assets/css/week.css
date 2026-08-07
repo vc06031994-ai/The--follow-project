@@ -591,6 +591,9 @@
     margin-top: auto;
     padding-top: 15px;
     border-top: 1px solid var(--tfp-dash-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .tfp-week__homework-back {
