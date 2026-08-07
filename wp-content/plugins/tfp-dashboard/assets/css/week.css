@@ -604,10 +604,15 @@
 .tfp-week__homework-main {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .tfp-week__homework-panel {
     animation: tfpFadeIn 0.3s ease;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .tfp-week__homework-title {
@@ -741,7 +746,7 @@
     bottom: 40px;
     background: var(--tfp-dash-bg, #fcfbf9);
     padding-top: 15px;
-    padding-bottom: 20px;
-    margin-top: 32px;
+    padding-bottom: 0px;
+    margin-top: auto;
     z-index: 10;
 }
