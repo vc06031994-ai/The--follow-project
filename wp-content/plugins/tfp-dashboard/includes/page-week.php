@@ -466,11 +466,14 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                     <?php endforeach; ?>
                 </div>
                 
-                <?php if (!$is_submitted) : ?>
-                <div class="tfp-week__homework-submission-actions" style="display:flex; margin-top:32px;">
-                    <button class="tfp-dash-btn tfp-reded-btn tfp-homework-submit-btn"><?php esc_html_e('Submit Homework', 'tfp-dashboard'); ?></button>
+                <div class="tfp-week__homework-submission-actions" style="display:flex; justify-content:flex-end; margin-top:32px;">
+                    <?php if (!$is_submitted) : ?>
+                        <button class="tfp-dash-btn tfp-reded-btn tfp-homework-submit-btn"><?php esc_html_e('Submit Homework for Review', 'tfp-dashboard'); ?></button>
+                        <a href="?lesson_id=<?php echo $week->ID; ?>&tab=quiz" class="tfp-dash-btn tfp-dash-btn--primary tfp-homework-next-step-btn" style="display:none;"><?php esc_html_e('Continue to Quiz', 'tfp-dashboard'); ?> <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none" style="margin-left:8px;"><path d="M1 5H11M7 9L11 5L7 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    <?php else : ?>
+                        <a href="?lesson_id=<?php echo $week->ID; ?>&tab=quiz" class="tfp-dash-btn tfp-dash-btn--primary tfp-homework-next-step-btn"><?php esc_html_e('Continue to Quiz', 'tfp-dashboard'); ?> <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none" style="margin-left:8px;"><path d="M1 5H11M7 9L11 5L7 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
             </div>
 
         </div>

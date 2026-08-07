@@ -136,9 +136,13 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(res => {
                 if (res.success) {
                     switchState('state-review');
-                    setTimeout(() => {
-                        window.location.href = window.location.pathname + '?tab=quiz';
-                    }, 1500);
+                    // Hide all submit buttons and show next step buttons
+                    document.querySelectorAll('.tfp-homework-submit-btn').forEach(function(b) {
+                        b.style.display = 'none';
+                    });
+                    document.querySelectorAll('.tfp-homework-next-step-btn').forEach(function(b) {
+                        b.style.display = 'inline-flex';
+                    });
                 } else {
                     alert(res.message || 'Error submitting homework.');
                     btn.textContent = originalText;
