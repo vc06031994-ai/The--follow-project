@@ -347,6 +347,9 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                 </div>
                 <?php endforeach; ?>
             </div>
+            <div class="tfp-week__homework-sidebar-footer">
+                <a href="<?php echo esc_url($reading_url); ?>" class="tfp-dash-btn tfp-dash-btn--primary tfp-week__homework-back"><svg xmlns="http://www.w3.org/2000/svg" width="5" height="8" viewBox="0 0 5 8" fill="none" style="margin-right:8px;"><path d="M4.93994 0.94L1.88661 4L4.93994 7.06L3.99994 8L-5.88141e-05 4L3.99994 -4.10887e-08L4.93994 0.94Z" fill="currentColor"/></svg> <?php esc_html_e('Back to Reading', 'tfp-dashboard'); ?></a>
+            </div>
            
         </div>
         
@@ -428,7 +431,7 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                     <p><?php esc_html_e("You've answered all the questions for this section. Review your responses if needed, then submit your homework for review to unlock the next step.", 'tfp-dashboard'); ?></p>
                 </div>
                 <div class="tfp-week__homework-submission-actions" style="display:flex; gap:16px; margin-top:24px;">
-                    <button class="tfp-dash-btn tfp-dash-btn--outline tfp-homework-review-btn"><?php esc_html_e('Review Answers', 'tfp-dashboard'); ?></button>
+                    <button class="tfp-dash-btn tfp-dash-btn--primary tfp-homework-review-btn"><?php esc_html_e('Review Answers', 'tfp-dashboard'); ?></button>
                     <button class="tfp-dash-btn tfp-reded-btn tfp-homework-submit-btn"><?php esc_html_e('Submit Homework for Review', 'tfp-dashboard'); ?></button>
                 </div>
             </div>
@@ -462,12 +465,12 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                     </div>
                     <?php endforeach; ?>
                 </div>
-            </div>
-
-             <div class="tfp-week__homework-sidebar-footer">
-                <!-- Global Submit Homework Button -->
-                <button class="tfp-dash-btn tfp-reded-btn tfp-homework-submit-btn tfp-homework-global-submit"><?php esc_html_e('Submit Homework', 'tfp-dashboard'); ?></button>
-                <a href="<?php echo esc_url($reading_url); ?>" class="tfp-dash-btn tfp-dash-btn--outline tfp-week__homework-back"><svg xmlns="http://www.w3.org/2000/svg" width="5" height="8" viewBox="0 0 5 8" fill="none"><path d="M4.93994 0.94L1.88661 4L4.93994 7.06L3.99994 8L-5.88141e-05 4L3.99994 -4.10887e-08L4.93994 0.94Z" fill="currentColor"/></svg> <?php esc_html_e('Back to Reading', 'tfp-dashboard'); ?></a>
+                
+                <?php if (!$is_submitted) : ?>
+                <div class="tfp-week__homework-submission-actions" style="display:flex; margin-top:32px;">
+                    <button class="tfp-dash-btn tfp-reded-btn tfp-homework-submit-btn"><?php esc_html_e('Submit Homework', 'tfp-dashboard'); ?></button>
+                </div>
+                <?php endif; ?>
             </div>
 
         </div>
