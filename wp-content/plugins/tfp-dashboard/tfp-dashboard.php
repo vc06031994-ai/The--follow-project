@@ -141,13 +141,5 @@ add_action('wp_enqueue_scripts', function () {
     }
 });
 
-/**
- * Enqueue assets for the dynamic syllabus shortcode globally (on product pages).
- */
-add_action('wp_enqueue_scripts', function() {
-    if (is_product()) {
-        wp_enqueue_style('tfp-syllabus', TFP_DASH_URL . 'assets/css/syllabus.css', [], TFP_DASH_VERSION);
-        wp_enqueue_script('tfp-syllabus', TFP_DASH_URL . 'assets/js/syllabus.js', [], TFP_DASH_VERSION, true);
-    }
-});
+
 
