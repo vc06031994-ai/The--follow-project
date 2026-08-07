@@ -500,6 +500,11 @@
     flex: 0 0 450px;
     border-right: 2px solid var(--tfp-dash-border);
     padding-right: 20px;
+    position: sticky;
+    top: 40px;
+    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
 }
 
 .tfp-week__homework-progress-title {
@@ -514,7 +519,8 @@
     flex-direction: column;
     gap: 12px;
     margin-bottom: 20px;
-    max-height: calc(100vh - 250px);
+    flex-grow: 1;
+    min-height: 0;
     overflow-y: auto;
     padding-right: 15px;
 }
@@ -579,10 +585,15 @@
     flex: 0 0 auto;
 }
 
+.tfp-week__homework-sidebar-footer {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid var(--tfp-dash-border);
+}
+
 .tfp-week__homework-back {
-    justify-content: flex-start;
-    padding-left: 0;
-    margin-top: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .tfp-week__homework-main {

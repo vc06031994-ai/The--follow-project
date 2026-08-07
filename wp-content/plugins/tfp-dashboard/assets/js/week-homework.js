@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Sidebar Nav
-    document.querySelectorAll('.tfp-homework-nav-btn').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
+    document.querySelectorAll('.tfp-week__homework-list-item').forEach(function (item) {
+        item.addEventListener('click', function (e) {
             e.preventDefault();
             if (currentState === 'state-1') {
                 switchState('state-2');
@@ -81,11 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 switchState('state-2');
             }
             if (currentState === 'state-2') {
-                var parent = this.closest('.tfp-week__homework-list-item');
-                if (parent) {
-                    var idx = parseInt(parent.getAttribute('data-index'), 10);
-                    showQuestion(idx);
-                }
+                var idx = parseInt(this.getAttribute('data-index'), 10);
+                showQuestion(idx);
             }
         });
     });
@@ -112,8 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Submit for Review Button
-    var submitBtn = document.querySelector('.tfp-homework-submit-btn');
-    if (submitBtn) {
+    var submitBtns = document.querySelectorAll('.tfp-homework-submit-btn');
+    submitBtns.forEach(function(submitBtn) {
         submitBtn.addEventListener('click', function (e) {
             e.preventDefault();
             var btn = this;
@@ -147,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 btn.disabled = false;
             });
         });
-    }
+    });
 
     // Auto-save logic
     var saveTimeout;
@@ -204,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (statusSpan) statusSpan.textContent = 'Completed';
                     var btn = navItem.querySelector('.tfp-homework-nav-btn');
                     if (btn) {
-                        btn.textContent = 'Review Question';
+                        btn.textContent = 'Edit Answer';
                         btn.classList.remove('tfp-dash-btn--primary');
                         btn.classList.add('tfp-reded-btn');
                     }
