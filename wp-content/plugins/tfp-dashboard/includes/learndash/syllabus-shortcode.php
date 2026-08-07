@@ -9,6 +9,10 @@ if (!defined('ABSPATH')) exit;
 add_shortcode('tfp_program_syllabus', function($atts) {
     $product_id = get_the_ID();
     
+    // Enqueue styles and scripts directly in the shortcode so they load on any page
+    wp_enqueue_style('tfp-syllabus', TFP_DASH_URL . 'assets/css/syllabus.css', [], TFP_DASH_VERSION);
+    wp_enqueue_script('tfp-syllabus', TFP_DASH_URL . 'assets/js/syllabus.js', [], TFP_DASH_VERSION, true);
+
     // Debugging check (Only for admins if needed)
     $is_admin = current_user_can('manage_options');
 

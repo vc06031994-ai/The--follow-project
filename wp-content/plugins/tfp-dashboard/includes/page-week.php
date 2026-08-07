@@ -336,9 +336,9 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                 <?php foreach ($questions as $index => $q) : 
                     $is_answered = tfp_week_is_question_answered($q, isset($answers[$q['id']]) ? $answers[$q['id']] : []);
                     $status_text = $is_answered ? __('Completed', 'tfp-dashboard') : __('Not Started', 'tfp-dashboard');
-                    $btn_text = $is_answered ? __('Review Question', 'tfp-dashboard') : __('Answer Question', 'tfp-dashboard');
+                    $btn_text = $is_answered ? __('Edit Answer', 'tfp-dashboard') : __('Answer Question', 'tfp-dashboard');
                 ?>
-                <div class="tfp-week__homework-list-item <?php echo $is_answered ? 'is-completed' : ''; ?>" data-question-id="<?php echo esc_attr($q['id']); ?>" data-index="<?php echo $index; ?>">
+                <div class="tfp-week__homework-list-item <?php echo $is_answered ? 'is-completed' : ''; ?>" data-question-id="<?php echo esc_attr($q['id']); ?>" data-index="<?php echo $index; ?>" style="cursor: pointer;">
                     <div class="tfp-week__homework-list-item-info">
                         <div class="tfp-week__homework-list-item-title"><?php echo esc_html(wp_trim_words($q['prompt'], 5, '...')); ?></div>
                         <div class="tfp-week__homework-list-item-status">Status: <span><?php echo esc_html($status_text); ?></span></div>
@@ -349,7 +349,11 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                 </div>
                 <?php endforeach; ?>
             </div>
-            <a href="<?php echo esc_url($reading_url); ?>" class="tfp-dash-btn tfp-dash-btn--primary tfp-week__homework-back"><svg xmlns="http://www.w3.org/2000/svg" width="5" height="8" viewBox="0 0 5 8" fill="none"><path d="M4.93994 0.94L1.88661 4L4.93994 7.06L3.99994 8L-5.88141e-05 4L3.99994 -4.10887e-08L4.93994 0.94Z" fill="currentColor"/></svg> <?php esc_html_e('Back to Reading', 'tfp-dashboard'); ?></a>
+            <div class="tfp-week__homework-sidebar-footer">
+                <!-- Global Submit Homework Button -->
+                <button class="tfp-dash-btn tfp-reded-btn tfp-homework-submit-btn tfp-homework-global-submit" style="width: 100%; margin-bottom: 12px;"><?php esc_html_e('Submit Homework', 'tfp-dashboard'); ?></button>
+                <a href="<?php echo esc_url($reading_url); ?>" class="tfp-dash-btn tfp-dash-btn--outline tfp-week__homework-back" style="width: 100%; text-align: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg" width="5" height="8" viewBox="0 0 5 8" fill="none"><path d="M4.93994 0.94L1.88661 4L4.93994 7.06L3.99994 8L-5.88141e-05 4L3.99994 -4.10887e-08L4.93994 0.94Z" fill="currentColor"/></svg> <?php esc_html_e('Back to Reading', 'tfp-dashboard'); ?></a>
+            </div>
         </div>
         
         <div class="tfp-week__homework-main">
