@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (res.success) {
                     switchState('state-review');
                     setTimeout(() => {
-                        window.location.href = window.location.pathname + '?tab=reading';
+                        window.location.href = window.location.pathname + '?tab=quiz';
                     }, 1500);
                 } else {
                     alert(res.message || 'Error submitting homework.');
