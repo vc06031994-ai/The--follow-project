@@ -735,3 +735,13 @@
         padding-bottom: 20px;
     }
 }
+
+.tfp-week__homework-sticky-footer {
+    position: sticky;
+    bottom: 40px;
+    background: var(--tfp-dash-bg, #fcfbf9);
+    padding-top: 15px;
+    padding-bottom: 20px;
+    margin-top: 32px;
+    z-index: 10;
+}

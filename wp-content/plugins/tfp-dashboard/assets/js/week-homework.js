@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 panels[key].style.display = (key === newState) ? 'block' : 'none';
             }
         }
-        
+
         if (newState === 'state-2') {
             showQuestion(activeIndex);
         }
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Submit for Review Button
     var submitBtns = document.querySelectorAll('.tfp-homework-submit-btn');
-    submitBtns.forEach(function(submitBtn) {
+    submitBtns.forEach(function (submitBtn) {
         submitBtn.addEventListener('click', function (e) {
             e.preventDefault();
             var btn = this;
@@ -132,39 +132,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'POST',
                 body: data
             })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    switchState('state-review');
-                    // Hide all submit buttons and show next step buttons
-                    document.querySelectorAll('.tfp-homework-submit-btn').forEach(function(b) {
-                        b.style.display = 'none';
-                    });
-                    document.querySelectorAll('.tfp-homework-next-step-btn').forEach(function(b) {
-                        b.style.display = 'inline-flex';
-                    });
-                } else {
-                    alert(res.message || 'Error submitting homework.');
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        switchState('state-review');
+                        // Hide all submit buttons and show next step buttons
+                        document.querySelectorAll('.tfp-homework-submit-btn').forEach(function (b) {
+                            b.style.display = 'none';
+                        });
+                        document.querySelectorAll('.tfp-homework-next-step-btn').forEach(function (b) {
+                            b.style.display = 'inline-flex';
+                        });
+                    } else {
+                        alert(res.message || 'Error submitting homework.');
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('A network error occurred.');
                     btn.textContent = originalText;
                     btn.disabled = false;
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert('A network error occurred.');
-                btn.textContent = originalText;
-                btn.disabled = false;
-            });
+                });
         });
     });
 
     // Auto-save logic
     var saveTimeout;
-    
+
     function saveAnswer(container) {
         var qId = container.getAttribute('data-question-id');
         var indicator = container.querySelector('.tfp-homework-saving-indicator');
-        
+
         var data = new URLSearchParams();
         data.append('action', 'tfp_week_save_homework_answer');
         data.append('tfp_week_nonce', tfpWeekSettings.nonce);
@@ -190,44 +190,44 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             body: data
         })
-        .then(res => res.json())
-        .then(res => {
-            if (res.success) {
-                if (indicator) {
-                    indicator.textContent = 'Saved';
-                    setTimeout(() => indicator.style.display = 'none', 2000);
-                }
-                
-                // Update sidebar title and statuses
-                var progressTitle = document.querySelector('.tfp-week__homework-progress-title');
-                if (progressTitle && res.progress) {
-                    progressTitle.textContent = 'Homework Progress — ' + res.progress.completed + ' of ' + res.progress.total + ' Completed';
-                }
-                
-                // Mark current sidebar item as completed (naive client-side check, 
-                // ideally we'd check actual response data, but doing it heuristically here)
-                var navItem = document.querySelector('.tfp-week__homework-list-item[data-question-id="' + qId + '"]');
-                if (navItem) {
-                    navItem.classList.add('is-completed');
-                    var statusSpan = navItem.querySelector('.tfp-week__homework-list-item-status span');
-                    if (statusSpan) statusSpan.textContent = 'Completed';
-                    var btn = navItem.querySelector('.tfp-homework-nav-btn');
-                    if (btn) {
-                        btn.textContent = 'Edit Answer';
-                        btn.classList.remove('tfp-dash-btn--primary');
-                        btn.classList.add('tfp-reded-btn');
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    if (indicator) {
+                        indicator.textContent = 'Saved';
+                        setTimeout(() => indicator.style.display = 'none', 2000);
                     }
+
+                    // Update sidebar title and statuses
+                    var progressTitle = document.querySelector('.tfp-week__homework-progress-title');
+                    if (progressTitle && res.progress) {
+                        progressTitle.textContent = 'Homework Progress — ' + res.progress.completed + ' of ' + res.progress.total + ' Completed';
+                    }
+
+                    // Mark current sidebar item as completed (naive client-side check, 
+                    // ideally we'd check actual response data, but doing it heuristically here)
+                    var navItem = document.querySelector('.tfp-week__homework-list-item[data-question-id="' + qId + '"]');
+                    if (navItem) {
+                        navItem.classList.add('is-completed');
+                        var statusSpan = navItem.querySelector('.tfp-week__homework-list-item-status span');
+                        if (statusSpan) statusSpan.textContent = 'Completed';
+                        var btn = navItem.querySelector('.tfp-homework-nav-btn');
+                        if (btn) {
+                            btn.textContent = 'Edit Answer';
+                            btn.classList.remove('tfp-dash-btn--primary');
+                            btn.classList.add('tfp-reded-btn');
+                        }
+                    }
+
+                    // If all completed, enable finish/submit? Handled by state transitions.
+                } else {
+                    if (indicator) indicator.textContent = 'Error';
                 }
-                
-                // If all completed, enable finish/submit? Handled by state transitions.
-            } else {
+            })
+            .catch(err => {
+                console.error(err);
                 if (indicator) indicator.textContent = 'Error';
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            if (indicator) indicator.textContent = 'Error';
-        });
+            });
     }
 
     qContainers.forEach(function (container) {

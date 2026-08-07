@@ -360,7 +360,9 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                 <div class="tfp-week__homework-desc">
                     <p><?php esc_html_e("This section helps you reflect on what you've learned through the readings. Take your time and answer thoughtfully before moving to the quiz.", 'tfp-dashboard'); ?></p>
                 </div>
-                <button class="tfp-dash-btn tfp-reded-btn tfp-homework-start-btn"><?php esc_html_e('Start Homework', 'tfp-dashboard'); ?></button>
+                <div class="tfp-week__homework-sticky-footer" style="display:flex; justify-content:flex-end;">
+                    <button class="tfp-dash-btn tfp-reded-btn tfp-homework-start-btn"><?php esc_html_e('Start Homework', 'tfp-dashboard'); ?></button>
+                </div>
             </div>
 
             <!-- STATE 2: In Progress (Questions) -->
@@ -407,9 +409,9 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                         <?php endif; ?>
                     </div>
                     
-                    <div class="tfp-week__homework-nav">
+                    <div class="tfp-week__homework-nav tfp-week__homework-sticky-footer" style="display:flex; justify-content:flex-end; align-items:center;">
                         <?php if ($index > 0) : ?>
-                            <button class="tfp-dash-btn tfp-dash-btn--primary tfp-homework-prev" data-target="<?php echo esc_attr($questions[$index - 1]['id']); ?>"><?php esc_html_e('Previous', 'tfp-dashboard'); ?></button>
+                            <button class="tfp-dash-btn tfp-dash-btn--primary tfp-homework-prev" data-target="<?php echo esc_attr($questions[$index - 1]['id']); ?>" style="margin-right:12px;"><?php esc_html_e('Previous', 'tfp-dashboard'); ?></button>
                         <?php endif; ?>
                         
                         <?php if ($index < $total - 1) : ?>
@@ -430,7 +432,7 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                 <div class="tfp-week__homework-desc">
                     <p><?php esc_html_e("You've answered all the questions for this section. Review your responses if needed, then submit your homework for review to unlock the next step.", 'tfp-dashboard'); ?></p>
                 </div>
-                <div class="tfp-week__homework-submission-actions" style="display:flex; gap:16px; margin-top:24px;">
+                <div class="tfp-week__homework-submission-actions tfp-week__homework-sticky-footer" style="display:flex; gap:16px;">
                     <button class="tfp-dash-btn tfp-dash-btn--primary tfp-homework-review-btn"><?php esc_html_e('Review Answers', 'tfp-dashboard'); ?></button>
                     <button class="tfp-dash-btn tfp-reded-btn tfp-homework-submit-btn"><?php esc_html_e('Submit Homework for Review', 'tfp-dashboard'); ?></button>
                 </div>
@@ -466,7 +468,7 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                     <?php endforeach; ?>
                 </div>
                 
-                <div class="tfp-week__homework-submission-actions" style="display:flex; justify-content:flex-end; margin-top:32px;">
+                <div class="tfp-week__homework-submission-actions tfp-week__homework-sticky-footer" style="display:flex; justify-content:flex-end;">
                     <?php if (!$is_submitted) : ?>
                         <button class="tfp-dash-btn tfp-reded-btn tfp-homework-submit-btn"><?php esc_html_e('Submit Homework for Review', 'tfp-dashboard'); ?></button>
                         <a href="?lesson_id=<?php echo $week->ID; ?>&tab=quiz" class="tfp-dash-btn tfp-dash-btn--primary tfp-homework-next-step-btn" style="display:none;"><?php esc_html_e('Continue to Quiz', 'tfp-dashboard'); ?> <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none" style="margin-left:8px;"><path d="M1 5H11M7 9L11 5L7 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
