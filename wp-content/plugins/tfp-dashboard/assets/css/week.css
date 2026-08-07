@@ -228,6 +228,12 @@
     align-items: center;
 }
 
+.tfp-week__video-footer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 /* Meeting tab */
 
 .tfp-week__meeting {
@@ -575,11 +581,13 @@
     font-size: 12px;
     color: var(--tfp-dash-muted);
 }
+
 .tfp-week__homework-list-item-status span {
     font-weight: 700;
 }
 
-.tfp-week__homework-nav-btn, .tfp-homework-nav-btn {
+.tfp-week__homework-nav-btn,
+.tfp-homework-nav-btn {
     border-radius: 999px !important;
 }
 
