@@ -276,13 +276,10 @@ function tfp_dashboard_render_week_reading_tab($week, $progress)
                 <div class="tfp-reading-content-body">
                     <p><em><?php esc_html_e("You've completed this passage. Great job stay consistent in your study.", 'tfp-dashboard'); ?></em></p>
                 </div>
-                <div class="tfp-reading-content-actions">
-                    <a href="?lesson_id=<?php echo $week->ID; ?>&tab=homework" class="tfp-dash-btn tfp-dash-btn--outline tfp-reading-go-homework"><?php esc_html_e('Homework', 'tfp-dashboard'); ?> &rarr;</a>
-                </div>
             </div>
             
             <!-- Default empty panel shown before a reading is launched -->
-            <div class="tfp-reading-content-panel tfp-reading-default is-active" data-content-id="default">
+            <div class="tfp-reading-content-panel tfp-reading-default <?php echo !$all_completed ? 'is-active' : ''; ?>" data-content-id="default">
                 <h3 class="tfp-reading-content-title"><?php esc_html_e('Select a Reading to Begin', 'tfp-dashboard'); ?></h3>
                 <div class="tfp-reading-content-body">
                     <p><?php esc_html_e('Choose a passage from the list to start your reading for this section. Your progress will be saved automatically.', 'tfp-dashboard'); ?></p>
@@ -291,6 +288,17 @@ function tfp_dashboard_render_week_reading_tab($week, $progress)
                     <?php endif; ?>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- GLOBAL FOOTER -->
+    <div class="tfp-week__homework-global-footer">
+        <div class="tfp-week__homework-footer-left">
+            <!-- Back to video is now inside the sidebar, keep it there as per design, or should we move it here? -->
+        </div>
+        
+        <div class="tfp-week__homework-footer-right">
+            <a href="?lesson_id=<?php echo $week->ID; ?>&tab=homework" class="tfp-dash-btn tfp-dash-btn--primary tfp-reading-go-homework" style="<?php echo $all_completed ? 'display:inline-flex;' : 'display:none;'; ?>"><?php esc_html_e('Continue to Homework', 'tfp-dashboard'); ?> <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none" style="margin-left:8px;"><path d="M1 5H11M7 9L11 5L7 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
     </div>
     <?php
