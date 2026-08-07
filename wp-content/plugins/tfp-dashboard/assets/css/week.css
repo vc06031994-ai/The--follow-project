@@ -577,11 +577,13 @@
     font-size: 12px;
     color: var(--tfp-dash-muted);
 }
-
 .tfp-week__homework-list-item-status span {
     font-weight: 700;
 }
 
+.tfp-week__homework-nav-btn, .tfp-homework-nav-btn {
+    border-radius: 999px !important;
+}
 
 .tfp-week__homework-sidebar-footer {
     margin-top: auto;
