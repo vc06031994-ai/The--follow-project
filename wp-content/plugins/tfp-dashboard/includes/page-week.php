@@ -150,8 +150,8 @@ function tfp_dashboard_render_week_video_tab($week, $progress)
         <?php endif; ?>
     </div>
 
-    <div class="tfp-week__video-footer" style="margin-top: 24px;">
-        <a href="?lesson_id=<?php echo esc_attr($week->ID); ?>&tab=reading" class="tfp-dash-btn tfp-dash-btn--primary tfp-week__video-next-btn" <?php echo !$is_complete ? 'style="opacity:0.45; pointer-events:none;" disabled' : ''; ?>><?php esc_html_e('Continue to Reading', 'tfp-dashboard'); ?></a>
+    <div class="tfp-week__video-footer" style="margin-top: 24px; display: flex; justify-content: flex-end;">
+        <a href="?lesson_id=<?php echo esc_attr($week->ID); ?>&tab=reading" class="tfp-dash-btn tfp-dash-btn--primary tfp-week__video-next-btn" <?php echo !$is_complete ? 'style="opacity:0.45; pointer-events:none;" disabled' : ''; ?>><?php esc_html_e('Continue to Reading', 'tfp-dashboard'); ?> <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M0.93994 0.94L4 4L0.93994 7.06L0 8L4 4L0 3.999L0.93994 0.94Z" fill="currentColor"/></svg></a>
     </div>
     <?php
 }
