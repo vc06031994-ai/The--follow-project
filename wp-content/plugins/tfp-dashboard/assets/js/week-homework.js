@@ -25,9 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        document.querySelectorAll('.tfp-week__footer-state').forEach(function(el) {
-            el.style.display = (el.classList.contains('tfp-week__footer-' + newState)) ? 'flex' : 'none';
-        });
+
 
         if (newState === 'state-2') {
             showQuestion(activeIndex);
@@ -40,9 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             el.style.display = (parseInt(el.getAttribute('data-index'), 10) === index) ? 'block' : 'none';
         });
         
-        document.querySelectorAll('.tfp-week__homework-global-footer .tfp-week__homework-nav').forEach(function(el) {
-            el.style.display = (parseInt(el.getAttribute('data-index'), 10) === index) ? 'flex' : 'none';
-        });
+
 
         // Update active class on sidebar
         navItems.forEach(function (el) {
