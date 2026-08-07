@@ -246,9 +246,7 @@ function tfp_dashboard_render_week_reading_tab($week, $progress)
                 </div>
                 <?php endforeach; ?>
             </div>
-            <button class="tfp-dash-btn tfp-dash-btn--primary tfp-reading-back-video" onclick="window.location.search = '?lesson_id=<?php echo $week->ID; ?>&tab=video'"><svg xmlns="http://www.w3.org/2000/svg" width="5" height="8" viewBox="0 0 5 8" fill="none">
-                <path d="M4.93994 0.94L1.88661 4L4.93994 7.06L3.99994 8L-5.88141e-05 4L3.99994 -4.10887e-08L4.93994 0.94Z" fill="currentColor"/>
-                </svg> <?php esc_html_e('Back to Video', 'tfp-dashboard'); ?></button>
+           
         </div>
         
         <div class="tfp-reading-content-area">
@@ -295,6 +293,9 @@ function tfp_dashboard_render_week_reading_tab($week, $progress)
     <div class="tfp-week__homework-global-footer">
         <div class="tfp-week__homework-footer-left">
             <!-- Back to video is now inside the sidebar, keep it there as per design, or should we move it here? -->
+              <button class="tfp-dash-btn tfp-dash-btn--primary tfp-reading-back-video" onclick="window.location.search = '?lesson_id=<?php echo $week->ID; ?>&tab=video'"><svg xmlns="http://www.w3.org/2000/svg" width="5" height="8" viewBox="0 0 5 8" fill="none">
+                <path d="M4.93994 0.94L1.88661 4L4.93994 7.06L3.99994 8L-5.88141e-05 4L3.99994 -4.10887e-08L4.93994 0.94Z" fill="currentColor"/>
+                </svg> <?php esc_html_e('Back to Video', 'tfp-dashboard'); ?></button>
         </div>
         
         <div class="tfp-week__homework-footer-right">

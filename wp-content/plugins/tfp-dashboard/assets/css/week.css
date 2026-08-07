@@ -588,6 +588,10 @@
     color: var(--tfp-dash-text);
 }
 
+.tfp-homework-nav-btn {
+    font-size: 14px !important;
+}
+
 .tfp-week__homework-list-item.is-completed .tfp-week__homework-list-item-status span {
     color: var(--tfp-dash-text);
 }
