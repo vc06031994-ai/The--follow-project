@@ -71,17 +71,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Sidebar Nav
+    // Sidebar Nav — supports edit from review/state-3 and normal nav from state-2/state-1
     document.querySelectorAll('.tfp-week__homework-list-item').forEach(function (item) {
         item.addEventListener('click', function (e) {
             e.preventDefault();
-            if (currentState === 'state-1') {
+            var idx = parseInt(this.getAttribute('data-index'), 10);
+            if (currentState === 'state-review' || currentState === 'state-3') {
+                // Edit mode: open question for editing
+                currentState = 'state-2';
+                for (var key in panels) {
+                    if (panels[key]) panels[key].style.display = (key === 'state-2') ? 'block' : 'none';
+                }
+                showQuestion(idx);
+            } else if (currentState === 'state-1') {
                 switchState('state-2');
-            } else if (currentState === 'state-3') {
-                switchState('state-2');
-            }
-            if (currentState === 'state-2') {
-                var idx = parseInt(this.getAttribute('data-index'), 10);
+                showQuestion(idx);
+            } else {
                 showQuestion(idx);
             }
         });
@@ -130,7 +135,10 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
-                    window.location.reload();
+                    switchState('state-review');
+                    setTimeout(() => {
+                        window.location.href = window.location.pathname + '?tab=reading';
+                    }, 1500);
                 } else {
                     alert(res.message || 'Error submitting homework.');
                     btn.textContent = originalText;

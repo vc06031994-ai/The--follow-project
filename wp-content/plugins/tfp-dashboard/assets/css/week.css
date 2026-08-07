@@ -581,8 +581,8 @@
     font-weight: 700;
 }
 
-.tfp-homework-nav-btn {
-    flex: 0 0 auto;
+.tfp-week__homework-nav-btn, .tfp-homework-nav-btn {
+    border-radius: 999px !important;
 }
 
 .tfp-week__homework-sidebar-footer {
