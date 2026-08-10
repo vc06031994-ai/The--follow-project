@@ -48,6 +48,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 el.classList.remove('is-active');
             }
         });
+
+        // Show/hide nav buttons for the active question (they are hidden by default via PHP inline style)
+        document.querySelectorAll('.tfp-week__homework-nav').forEach(function (nav) {
+            if (parseInt(nav.getAttribute('data-index'), 10) === index) {
+                nav.style.display = 'flex';
+            } else {
+                nav.style.display = 'none';
+            }
+        });
     }
 
     // Start Button
