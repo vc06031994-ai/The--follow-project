@@ -380,9 +380,6 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
                     <div class="tfp-week__homework-q-prompt">
                         <span class="tfp-week__homework-q-num"><?php echo ($index + 1); ?>.</span>
                         <span class="tfp-week__homework-q-text"><?php echo esc_html($q['prompt']); ?></span>
-                        <button type="button" class="tfp-dash-btn tfp-dash-btn--sm tfp-reded-btn" onclick="if(typeof showQuestion==='function'){showQuestion(<?php echo $index; ?>);}" style="float:right; font-size:12px; padding:4px 10px;">
-                            <?php esc_html_e('Edit', 'tfp-dashboard'); ?>
-                        </button>
                     </div>
                     
                     <div class="tfp-week__homework-q-inputs">
