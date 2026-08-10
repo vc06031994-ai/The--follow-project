@@ -140,22 +140,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Review Answers Button - refresh answers via AJAX
+    // Review Answers Button
     var reviewBtn = document.querySelector('.tfp-homework-review-btn');
     if (reviewBtn) {
         reviewBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            fetch(tfpWeekSettings.ajaxUrl, {
-                method: 'POST',
-                body: new URLSearchParams({ action: 'tfp_week_get_homework_answers', tfp_week_nonce: tfpWeekSettings.nonce, lesson_id: lessonId })
-            })
-            .then(r => r.json())
-            .then(res => {
-                switchState('state-review');
-            })
-            .catch(() => {
-                switchState('state-review');
-            });
+            switchState('state-review');
         });
     }
 
