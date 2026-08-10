@@ -333,7 +333,7 @@ function tfp_dashboard_render_week_homework_tab($week, $user_id)
         $initial_state = 'state-2'; // In progress
     }
     ?>
-    <div class="tfp-week__homework" data-lesson-id="<?php echo esc_attr($week->ID); ?>" data-state="<?php echo esc_attr($initial_state); ?>">
+    <div class="tfp-week__homework" data-lesson-id="<?php echo esc_attr($week->ID); ?>" data-state="<?php echo esc_attr($initial_state); ?>" data-submitted="<?php echo $is_submitted ? '1' : '0'; ?>">
         <div class="tfp-week__homework-sidebar">
             <h4 class="tfp-week__homework-progress-title">
                 <?php printf(esc_html__('Homework Progress — %d of %d Completed', 'tfp-dashboard'), $completed, $total); ?>
