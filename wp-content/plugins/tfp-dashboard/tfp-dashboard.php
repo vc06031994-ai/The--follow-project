@@ -66,6 +66,7 @@ require_once TFP_DASH_PATH . 'includes/week/cpt-readings.php';
 require_once TFP_DASH_PATH . 'includes/week/ajax.php';
 require_once TFP_DASH_PATH . 'includes/week/homework-helpers.php';
 require_once TFP_DASH_PATH . 'includes/week/homework-ajax.php';
+require_once TFP_DASH_PATH . 'includes/page-checkout.php';
 require_once TFP_DASH_PATH . 'includes/page-week.php';
 
 /**
