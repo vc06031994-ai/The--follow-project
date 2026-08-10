@@ -139,6 +139,10 @@ add_action('wp_enqueue_scripts', function () {
             'nonce'   => wp_create_nonce('tfp_week_nonce'),
         ]);
     }
+
+    if ($template === 'tfp-dashboard-checkout') {
+        wp_enqueue_style('tfp-dashboard-checkout', TFP_DASH_URL . 'assets/css/checkout.css', ['tfp-dashboard-core'], TFP_DASH_VERSION);
+    }
 });
 
 
