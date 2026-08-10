@@ -59,6 +59,19 @@ add_action('wp_ajax_tfp_week_save_homework_answer', function () {
 /**
  * Handle submitting the entire homework to unlock Quiz.
  */
+add_action('wp_ajax_tfp_week_get_homework_answers', function () {
+    if (!is_user_logged_in()) {
+        wp_send_json(['success' => false, 'message' => __('You must be logged in.', 'tfp-dashboard')], 403);
+    }
+    $lesson_id = isset($_POST['lesson_id']) ? absint($_POST['lesson_id']) : 0;
+    $user_id = get_current_user_id();
+    wp_send_json([
+        'success' => true,
+        'answers' => tfp_week_get_homework_answers($user_id, $lesson_id),
+        'questions' => tfp_week_get_homework_questions($lesson_id, false)
+    ]);
+});
+
 add_action('wp_ajax_tfp_week_submit_homework', function () {
     if (!is_user_logged_in()) {
         wp_send_json(['success' => false, 'message' => __('You must be logged in.', 'tfp-dashboard')], 403);

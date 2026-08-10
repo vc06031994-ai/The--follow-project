@@ -140,12 +140,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Review Answers Button - reload to get fresh data
+    // Review Answers Button - refresh answers via AJAX
     var reviewBtn = document.querySelector('.tfp-homework-review-btn');
     if (reviewBtn) {
         reviewBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            window.location.reload();
+            fetch(tfpWeekSettings.ajaxUrl, {
+                method: 'POST',
+                body: new URLSearchParams({ action: 'tfp_week_get_homework_answers', tfp_week_nonce: tfpWeekSettings.nonce, lesson_id: lessonId })
+            })
+            .then(r => r.json())
+            .then(res => {
+                window.location.reload();
+            })
+            .catch(() => {
+                switchState('state-review');
+            });
         });
     }
 
@@ -181,8 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             note.innerHTML = '<strong>Note:</strong> You will not be able to edit the homework questions';
                             document.querySelector('.tfp-week__homework-state-review').prepend(note);
                         }
-                        // Reload page to show fresh data in review
-                        window.location.reload();
+                        switchState('state-review');
                         // Hide all submit buttons and show next step buttons
                         document.querySelectorAll('.tfp-homework-submit-btn').forEach(function (b) {
                             b.style.display = 'none';
