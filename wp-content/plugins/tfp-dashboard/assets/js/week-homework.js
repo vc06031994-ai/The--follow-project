@@ -254,6 +254,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Click right-side question container to edit/open it
+    qContainers.forEach(function (container) {
+        container.style.cursor = 'pointer';
+        container.addEventListener('click', function (e) {
+            // Ignore if clicking inside an interactive element (inputs, buttons)
+            if (e.target.closest('input, button, textarea, label')) return;
+            var idx = parseInt(this.getAttribute('data-index'), 10);
+            if (currentState === 'state-review' || currentState === 'state-3') {
+                currentState = 'state-2';
+                for (var key in panels) {
+                    if (panels[key]) panels[key].style.display = (key === 'state-2') ? 'block' : 'none';
+                }
+                showQuestion(idx);
+            } else if (currentState === 'state-1') {
+                switchState('state-2');
+                showQuestion(idx);
+            } else {
+                showQuestion(idx);
+            }
+        });
+    });
+
     // Initialization
     if (currentState === 'state-2') {
         showQuestion(activeIndex);
