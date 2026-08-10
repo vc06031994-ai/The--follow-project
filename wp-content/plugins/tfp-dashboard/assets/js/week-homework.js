@@ -89,6 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
         item.addEventListener('click', function (e) {
             e.preventDefault();
             var idx = parseInt(this.getAttribute('data-index'), 10);
+            if (isSubmitted) {
+                return; // Disable edit after submit
+            }
             if (currentState === 'state-review' || currentState === 'state-3') {
                 // Edit mode: open question for editing
                 currentState = 'state-2';
@@ -131,6 +134,10 @@ document.addEventListener('DOMContentLoaded', function () {
     submitBtns.forEach(function (submitBtn) {
         submitBtn.addEventListener('click', function (e) {
             e.preventDefault();
+            // Confirm with note before submit
+            if (!confirm('Note: After submit aap homework questions edit nahi kar paayenge. Submit karna chahte hain?')) {
+                return;
+            }
             var btn = this;
             var originalText = btn.textContent;
             btn.textContent = 'Submitting...';
@@ -148,7 +155,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => res.json())
                 .then(res => {
                     if (res.success) {
-                        switchState('state-review');
+                        var note = document.getElementById('tfp-submission-note');
+                    if (!note) {
+                        note = document.createElement('div');
+                        note.id = 'tfp-submission-note';
+                        note.style.cssText = 'background:#fdf6e3; border-left:4px solid #bfa100; padding:12px 16px; margin-bottom:20px; color:#5a4a00; font-size:14px; border-radius:4px;';
+                        note.innerHTML = '<strong>Note:</strong> After submit aap homework questions edit nahi kar paayenge.';
+                        document.querySelector('.tfp-week__homework-state-review').prepend(note);
+                    }
+                    switchState('state-review');
                         // Hide all submit buttons and show next step buttons
                         document.querySelectorAll('.tfp-homework-submit-btn').forEach(function (b) {
                             b.style.display = 'none';
@@ -267,6 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
     qContainers.forEach(function (container) {
         container.style.cursor = 'pointer';
         container.addEventListener('click', function (e) {
+            if (isSubmitted) return; // Disable edit after submit
             // Ignore if clicking inside an interactive element (inputs, buttons)
             if (e.target.closest('input, button, textarea, label')) return;
             var idx = parseInt(this.getAttribute('data-index'), 10);
