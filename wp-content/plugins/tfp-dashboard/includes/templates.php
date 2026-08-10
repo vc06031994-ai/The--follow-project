@@ -47,10 +47,7 @@ function tfp_dashboard_template_map()
             'label' => __('TFP Dashboard — Week', 'tfp-dashboard'),
             'file'  => 'templates/template-week.php',
         ],
-        'tfp-dashboard-checkout'        => [
-            'label' => __('TFP Dashboard — Checkout', 'tfp-dashboard'),
-            'file'  => 'templates/template-checkout.php',
-        ],
+
     ];
 }
 
