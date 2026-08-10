@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         qContainers.forEach(function (el) {
             el.style.display = (parseInt(el.getAttribute('data-index'), 10) === index) ? 'block' : 'none';
         });
-        
+
 
 
         // Update active class on sidebar
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.addEventListener('click', function (e) {
             e.preventDefault();
             // Confirm with note before submit
-            if (!confirm('Note: After submit aap homework questions edit nahi kar paayenge. Submit karna chahte hain?')) {
+            if (!confirm('Note: You will not be able to edit the homework questions after submitting. Do you want to submit?')) {
                 return;
             }
             var btn = this;
@@ -156,14 +156,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => {
                     if (res.success) {
                         var note = document.getElementById('tfp-submission-note');
-                    if (!note) {
-                        note = document.createElement('div');
-                        note.id = 'tfp-submission-note';
-                        note.style.cssText = 'background:#fdf6e3; border-left:4px solid #bfa100; padding:12px 16px; margin-bottom:20px; color:#5a4a00; font-size:14px; border-radius:4px;';
-                        note.innerHTML = '<strong>Note:</strong> After submit aap homework questions edit nahi kar paayenge.';
-                        document.querySelector('.tfp-week__homework-state-review').prepend(note);
-                    }
-                    switchState('state-review');
+                        if (!note) {
+                            note = document.createElement('div');
+                            note.id = 'tfp-submission-note';
+                            note.style.cssText = 'background:#fdf6e3; border-left:4px solid #bfa100; padding:12px 16px; margin-bottom:20px; color:#5a4a00; font-size:14px; border-radius:4px;';
+                            note.innerHTML = '<strong>Note:</strong> You will not be able to edit the homework questions';
+                            document.querySelector('.tfp-week__homework-state-review').prepend(note);
+                        }
+                        switchState('state-review');
                         // Hide all submit buttons and show next step buttons
                         document.querySelectorAll('.tfp-homework-submit-btn').forEach(function (b) {
                             b.style.display = 'none';
