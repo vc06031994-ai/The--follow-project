@@ -1,0 +1,33 @@
+.tfp-checkout-wrap { max-width: 1200px; margin: 0 auto; padding: 28px 36px; display: flex; gap: 40px; flex-wrap: wrap; }
+.tfp-checkout-main { flex: 1; min-width: 320px; }
+.tfp-checkout-sidebar { flex: 0 0 360px; }
+.tfp-checkout-panel { background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 12px; padding: 28px; box-shadow: 0 8px 24px rgba(0,0,0,.05); margin-bottom: 24px; }
+.tfp-checkout-tabs { display: flex; gap: 24px; border-bottom: 1px solid rgba(0,0,0,.08); margin-bottom: 24px; padding-bottom: 8px; }
+.tfp-checkout-tab { font-size: 15px; font-weight: 700; color: var(--tfp-dash-muted); text-decoration: none; border-bottom: 3px solid transparent; padding: 8px 0; transition: color .15s, border-color .15s; }
+.tfp-checkout-tab.is-active { color: var(--tfp-dash-text); border-color: var(--tfp-dash-teal); }
+.tfp-checkout-step-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: var(--tfp-dash-muted); margin-bottom: 8px; }
+.tfp-checkout-step-title { font-size: 22px; font-weight: 800; margin-bottom: 16px; color: var(--tfp-dash-text); }
+.tfp-checkout-product-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,.06); align-items: center; }
+.tfp-checkout-product-img { width: 80px; height: 80px; background: #EFEFEF; border-radius: 8px; flex-shrink: 0; }
+.tfp-checkout-product-info { flex: 1; }
+.tfp-checkout-qty { display: flex; align-items: center; gap: 12px; }
+.tfp-checkout-summary-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 15px; }
+.tfp-checkout-summary-total { font-weight: 800; font-size: 20px; border-top: 2px solid var(--tfp-dash-border); padding-top: 14px; margin-top: 8px; display: flex; justify-content: space-between; }
+.tfp-checkout-payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tfp-checkout-payment-card { border: 2px solid transparent; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: border-color .15s; background: #fff; }
+.tfp-checkout-payment-card.is-active { border-color: var(--tfp-dash-teal); }
+.tfp-checkout-payment-card img, .tfp-checkout-payment-card svg { display: block; margin: 0 auto 10px; }
+.tfp-checkout-payment-card h4 { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+.tfp-checkout-payment-card p { font-size: 12px; color: var(--tfp-dash-muted); margin: 0; }
+.tfp-checkout-delivery-option { border: 2px solid transparent; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; cursor: pointer; transition: border-color .15s, background .15s; background: #fff; }
+.tfp-checkout-delivery-option.is-active { border-color: var(--tfp-dash-teal); background: rgba(0,102,110,.04); }
+.tfp-checkout-delivery-option h4 { font-size: 15px; font-weight: 700; margin: 0 0 4px; }
+.tfp-checkout-delivery-option p { font-size: 13px; color: var(--tfp-dash-muted); margin: 0; }
+.tfp-checkout-form-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.tfp-checkout-form-field { flex: 1; min-width: 240px; }
+.tfp-checkout-form-field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--tfp-dash-text); }
+.tfp-checkout-form-field input, .tfp-checkout-form-field textarea, .tfp-checkout-form-field select { width: 100%; padding: 12px 14px; border: 1px solid rgba(0,0,0,.12); border-radius: 8px; font-family: inherit; font-size: 14px; background: #fff; }
+.tfp-checkout-promo { display: flex; gap: 10px; margin-top: 16px; }
+.tfp-checkout-promo input { flex: 1; padding: 10px 14px; border: 1px solid rgba(0,0,0,.12); border-radius: 8px; font-size: 14px; }
+.tfp-checkout-payment-form { margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.06); display: none; }
+.tfp-checkout-payment-form.is-active { display: block; }
