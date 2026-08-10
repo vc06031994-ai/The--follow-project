@@ -91,11 +91,15 @@ document.addEventListener('DOMContentLoaded', function () {
         var popup = document.createElement('div');
         popup.id = 'tfp-submission-popup';
         popup.className = 'tfp-submission-popup';
-        popup.innerHTML = '<div class="tfp-submission-popup__box"><h3>Homework Submitted</h3><p>' + message + '</p><button class="tfp-dash-btn tfp-dash-btn--primary" id="tfp-popup-ok">OK</button></div>';
+        popup.innerHTML = '<div class="tfp-submission-popup__box"><h3>Homework Submitted</h3><p>' + message + '</p><div style="display:flex; gap:12px; justify-content:center;"><button class="tfp-dash-btn tfp-reded-btn" id="tfp-popup-cancel">Cancel</button><button class="tfp-dash-btn tfp-dash-btn--primary" id="tfp-popup-ok">Submit</button></div></div>';
         document.body.appendChild(popup);
         document.getElementById('tfp-popup-ok').addEventListener('click', function () {
             popup.remove();
             if (typeof onConfirm === 'function') onConfirm(true);
+        });
+        document.getElementById('tfp-popup-cancel').addEventListener('click', function () {
+            popup.remove();
+            if (typeof onConfirm === 'function') onConfirm(false);
         });
     }
 
