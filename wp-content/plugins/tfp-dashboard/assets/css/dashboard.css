@@ -542,6 +542,46 @@ p {
     font-size: 18px;
 }
 
+/* Custom submission popup (matches theme) */
+.tfp-submission-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.35);
+}
+.tfp-submission-popup[hidden] { display: none; }
+.tfp-submission-popup__box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 36px;
+    max-width: 480px;
+    width: 92%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    border-top: 6px solid #00666E;
+    text-align: center;
+    animation: tfpFadeIn 0.25s ease;
+}
+.tfp-submission-popup__box h3 {
+    margin: 0 0 14px;
+    font-size: 22px;
+    color: #151411;
+    font-weight: 800;
+}
+.tfp-submission-popup__box p {
+    margin: 0 0 24px;
+    font-size: 16px;
+    line-height: 160%;
+    color: #2E2E2E;
+    font-family: 'Lora', serif;
+}
+.tfp-submission-popup__box .tfp-dash-btn {
+    padding: 12px 36px !important;
+    font-size: 15px !important;
+}
+
 @media (max-width: 767px) {
     .tfp-dash-main {
         padding: 20px 16px 40px;

@@ -84,13 +84,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Custom theme popup
+    function showPopup(message, onConfirm) {
+        var existing = document.getElementById('tfp-submission-popup');
+        if (existing) existing.remove();
+        var popup = document.createElement('div');
+        popup.id = 'tfp-submission-popup';
+        popup.className = 'tfp-submission-popup';
+        popup.innerHTML = '<div class="tfp-submission-popup__box"><h3>Homework Submitted</h3><p>' + message + '</p><button class="tfp-dash-btn tfp-dash-btn--primary" id="tfp-popup-ok">OK</button></div>';
+        document.body.appendChild(popup);
+        document.getElementById('tfp-popup-ok').addEventListener('click', function () {
+            popup.remove();
+            if (typeof onConfirm === 'function') onConfirm(true);
+        });
+    }
+
     // Sidebar Nav — supports edit from review/state-3 and normal nav from state-2/state-1
     document.querySelectorAll('.tfp-week__homework-list-item').forEach(function (item) {
         item.addEventListener('click', function (e) {
             e.preventDefault();
             var idx = parseInt(this.getAttribute('data-index'), 10);
             if (isSubmitted) {
-                return; // Disable edit after submit
+                showPopup('You cannot edit now because you have submitted your homework.', null);
+                return;
             }
             if (currentState === 'state-review' || currentState === 'state-3') {
                 // Edit mode: open question for editing
@@ -134,14 +150,12 @@ document.addEventListener('DOMContentLoaded', function () {
     submitBtns.forEach(function (submitBtn) {
         submitBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            // Confirm with note before submit
-            if (!confirm('Note: You will not be able to edit the homework questions after submitting. Do you want to submit?')) {
-                return;
-            }
-            var btn = this;
-            var originalText = btn.textContent;
-            btn.textContent = 'Submitting...';
-            btn.disabled = true;
+            var btn = submitBtn;
+            showPopup('Note: After submit you will not be able to edit the homework questions. Submit?', function(ok) {
+                if (!ok) return;
+                var originalText = btn.textContent;
+                btn.textContent = 'Submitting...';
+                btn.disabled = true;
 
             var data = new URLSearchParams();
             data.append('action', 'tfp_week_submit_homework');
@@ -183,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     btn.textContent = originalText;
                     btn.disabled = false;
                 });
+            });
         });
     });
 
