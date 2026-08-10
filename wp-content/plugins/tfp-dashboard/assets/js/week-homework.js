@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(r => r.json())
             .then(res => {
-                window.location.reload();
+                switchState('state-review');
             })
             .catch(() => {
                 switchState('state-review');
