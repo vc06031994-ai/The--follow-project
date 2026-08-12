@@ -66,6 +66,7 @@ require_once TFP_DASH_PATH . 'includes/week/cpt-readings.php';
 require_once TFP_DASH_PATH . 'includes/week/ajax.php';
 require_once TFP_DASH_PATH . 'includes/week/homework-helpers.php';
 require_once TFP_DASH_PATH . 'includes/week/homework-ajax.php';
+require_once TFP_DASH_PATH . 'includes/page-checkout.php';
 require_once TFP_DASH_PATH . 'includes/page-week.php';
 
 /**
@@ -127,6 +128,10 @@ add_action('wp_enqueue_scripts', function () {
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce'   => wp_create_nonce('tfp_profile_nonce'),
         ]);
+    }
+
+    if ($template === 'tfp-dashboard-checkout') {
+        wp_enqueue_style('tfp-dashboard-checkout', TFP_DASH_URL . 'assets/css/checkout.css', ['tfp-dashboard-core'], TFP_DASH_VERSION);
     }
 
     if ($template === 'tfp-dashboard-week') {
